@@ -27,4 +27,11 @@ public class ArticleController
 		mv.addObject(article);
 		return mv;
 	}
+	
+	@RequestMapping("/addArticle")
+	public String addArticle(HttpServletRequest request)
+	{
+		return "addArticle";
+	}
+	
 }

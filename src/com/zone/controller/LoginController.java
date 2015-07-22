@@ -55,17 +55,26 @@ public class LoginController
 	@RequestMapping("/validate")
 	public ModelAndView validate(HttpServletRequest request)
 	{
-		String rand = (String) request.getSession().getAttribute("rand");
+		HttpSession session = request.getSession();
+		String rand = (String) session.getAttribute("rand");
 		String input = request.getParameter("rand");
 		
 		 // 登陆之前的页面，登陆完毕要返回该页面
-		String returnUrl = request.getParameter("returnUrl");
+		String returnUrl = null;
+		if(null != session.getAttribute("returnUrl"))  //优先选取session中保存的returnUrl
+		{
+			returnUrl = (String) session.getAttribute("returnUrl");
+		}
+		else
+		{
+			returnUrl = request.getParameter("returnUrl");
+			session.setAttribute("returnUrl", returnUrl); //把returnUrl放入session，防止第二次登录失败导致returnUrl变为登录页面
+		}
 		
 		String username = request.getParameter("username");
 		String password = MD5.MD5(request.getParameter("password"));
 		String message = null; //错误信息
 		User user = userService.findUser(username);
-		HttpSession session = request.getSession();
 		System.out.println("--------------------------"+rand+"  "+input);
 		if (rand.equals(input))	//验证用户名、密码和验证码
 		{
@@ -93,19 +102,12 @@ public class LoginController
 		}
 		
 		
-		//当验证不通过时才会执行以下代码
-		if(request.getHeader("referer") != returnUrl)  //当请求来自登录页面login2.jsp时
-		{	
+		//登录失败
 			HashMap<String, Object> model = new HashMap<String, Object>();
 			model.put("refer", request.getHeader("referer"));
 			model.put("message", message);
 			ModelAndView mv = new ModelAndView("login2",model);
 			return mv;
-		}
-		else //当请求来自登录横栏时
-		{
-			return new ModelAndView("redirect:"+returnUrl);
-		}
 	}
 
 	Color getRandColor(int fc, int bc)
