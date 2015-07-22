@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <div class="t3">
 	<span class="fr" style="margin-left: 0.5em">
-	<a href="http://localhost:8080/jeebbs/topic/v_add1.jspx"><img alt="发帖" src="img/post.png"></a>
+	<a href="addArticle"><img alt="发帖" src="img/post.png"></a>
 	</span> 
 	<span class="fr"><a href="javascript:void(0)" onclick="javascript:document.getElementsByTagName('BODY')[0].scrollTop=document.getElementsByTagName('BODY')[0].scrollHeight"><img alt="回复" src="img/reply.png"></a></span> 
 	<span class="fl">
@@ -174,18 +174,6 @@ function apply(id, val,pid){
 		          			<li><a href="http://localhost:8080/jeebbs/sqzx/2.jhtml#" id="magica_2_2_checkonline_test" title="使用道具" class="thickbox" "="">雷达卡</a></li>
 	          </ul>
           </div>
-          <div style="padding-left: 12px; padding-bottom: 8px">级别: 版主<br>
-          <img alt="" style="display: block; margin: 0.2em 0pt" src="img/21.gif"> <span class="user-info2" id="showface_0"><span class="user-infoWrap2">
-          <div class="c" style="width: 120px; height: 5px"></div>
-             UID: <span class="f12">9</span>  <a id="msgSendA_2_test" href="http://localhost:8080/jeebbs/member/getsendmsgpage.jhtml?username=test">打招呼</a><br>
-            积分:113   <a id="u9_2" href="javascript:apply('9','test','2')">加为好友</a> <br>
-         威望: 1           精华: 0 <br>
-          主题:<span class="s1 f12">22</span>
-          回复:<span class="s2 f12">6</span><br>
-          注册时间:<span class="gray">2011-04-11</span><br>
-           在线时长:<span class="gray">0.1</span><br>
-
-          </span></span></div>
           </th>
           <th class="r_one" id="td_tpc" valign="top" height="100%" style="border-top-width: 0pt; padding-right: 0px; padding-left: 0px; border-left-width: 0pt; border-bottom-width: 0pt; padding-bottom: 0px; overflow: hidden; padding-top: 0px; border-right-width: 0pt">
           <div class="tiptop"><span class="fl"><span class="b">1#</span></span> <span class="fl gray" style="white-space: nowrap">&nbsp; 发表于:2012-05-03 11:59:18&nbsp; IP:127.0.*.*
@@ -269,23 +257,7 @@ function apply(id, val,pid){
           </table>
           </div>
           <div id="user-magic-8" style="display: none;">
-	          <ul onmousemove="showUserMagicUL(&#39;8&#39;)"> 
-	          			<li><a href="http://localhost:8080/jeebbs/sqzx/2.jhtml#" id="magica_8_8_showip_zhong" title="使用道具" class="thickbox" "="">窥视卡</a></li>
-		          			<li><a href="http://localhost:8080/jeebbs/sqzx/2.jhtml#" id="magica_2_8_checkonline_zhong" title="使用道具" class="thickbox" "="">雷达卡</a></li>
-	          </ul>
           </div>
-          <div style="padding-left: 12px; padding-bottom: 8px">级别: 版主<br>
-          <img alt="" style="display: block; margin: 0.2em 0pt" src="img/21.gif"> <span class="user-info2" id="showface_0"><span class="user-infoWrap2">
-          <div class="c" style="width: 120px; height: 5px"></div>
-             UID: <span class="f12">11</span>  <a id="msgSendA_8_zhong" href="http://localhost:8080/jeebbs/member/getsendmsgpage.jhtml?username=zhong">打招呼</a><br>
-            积分:5   <a id="u11_8" href="javascript:apply('11','zhong','8')">加为好友</a> <br>
-         威望: 1           精华: 0 <br>
-          主题:<span class="s1 f12">1</span>
-          回复:<span class="s2 f12">3</span><br>
-          注册时间:<span class="gray">2015-04-03</span><br>
-           在线时长:<span class="gray">1.99</span><br>
-
-          </span></span></div>
           </th>
           <th class="r_one" id="td_tpc" valign="top" height="100%" style="border-top-width: 0pt; padding-right: 0px; padding-left: 0px; border-left-width: 0pt; border-bottom-width: 0pt; padding-bottom: 0px; overflow: hidden; padding-top: 0px; border-right-width: 0pt">
           <div class="tiptop"><span class="fl"><span class="b">${floor.index+2}#</span></span> <span class="fl gray" style="white-space: nowrap">&nbsp; 发表于:2015-04-05 11:02:16&nbsp; IP:127.0.*.*

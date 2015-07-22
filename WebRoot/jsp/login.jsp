@@ -29,7 +29,7 @@
 	
 	function logout()
 	{
-		document.getElementsByTagName("form")[0].submit();
+		document.getElementById("returnUrl").submit();
 	}
 	
 </script>
@@ -89,9 +89,9 @@
 											</script> <input type="hidden" name="returnUrl" value=""> <input
 											type="submit" name="submit" value="登录" class="loginbutton"></td>
 										<td>&nbsp; <a
-											href="http://localhost:8080/jeebbs/register.jspx"
+											href="register"
 											style="color:red;">注册</a> &nbsp; <a
-											href="http://localhost:8080/jeebbs/member/forgot_password.jspx"
+											href="#"
 											style="color:red;">找回密码</a></td>
 									</tr>
 								</tbody>
@@ -105,8 +105,8 @@
 						欢迎您：${sessionScope.username} &nbsp;&nbsp;【级别：童生】 &nbsp;&nbsp;【<a
 							href="">用户中心</a>】
 						&nbsp;&nbsp;【<a
-							href="javascript:void(0)" onclick="logout();">退出</a>】
-						<form action="logout" method="post">
+							href="javascript:void(0)" onclick="logout()">退出</a>】
+						<form id="returnUrl" action="logout" method="post">
 							<input id="return" type="hidden" name="returnUrl">
 							<script type="text/javascript">
 									document.getElementById("return").value = document.location;

@@ -87,9 +87,10 @@ to {
 						<a title="JEECMS官方网站"
 							href="./JEEBBS论坛 - JEECMS官方论坛 开源java cms,jsp cms,jsp bbs_files/JEEBBS论坛 - JEECMS官方论坛 开源java cms,jsp cms,jsp bbs.htm"
 							class="logo" id="logo"></a>
+						
 						<ul class="dhlmenu-list">
 							<li class="dhlmenu-list-index current"><a
-								href="./JEEBBS论坛 - JEECMS官方论坛 开源java cms,jsp cms,jsp bbs_files/JEEBBS论坛 - JEECMS官方论坛 开源java cms,jsp cms,jsp bbs.htm">首页</a></li>
+								href="main">首页</a></li>
 							<li><a href="http://www.jeecms.com/" target="_blank">官网</a></li>
 							<li><a href="http://www.jeecms.com/buy/index.htm"
 								target="_blank">购买</a></li>
@@ -98,6 +99,7 @@ to {
 							<li id="search" class=""><a
 								href="http://localhost:8080/jeebbs/topic/search.jhtml">主题搜索</a></li>
 						</ul>
+						
 					</div>
 				</div>
 			</div>

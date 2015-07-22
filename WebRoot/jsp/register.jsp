@@ -10,10 +10,12 @@
 <!-- saved from url=(0032)http://bbs.jeecms.com/login.jspx -->
 <html><style type="text/css" id="32977032000"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
-    <title>您尚未登录</title>
-	<link href="css/front.css" rel="stylesheet" type="text/css">
-	<script src="js/hm.js"></script><script src="js/jquery.js" type="text/javascript"></script><style type="text/css" adt="123"></style>
+    <title>注册</title>
+	<script src="js/jquery.js" type="text/javascript"></script>
+	<script src="js/hm.js"></script>
 	<script src="js/front.js" type="text/javascript"></script>
+	<link href="css/front.css" rel="stylesheet" type="text/css">
+	<style type="text/css" adt="123"></style>
     <link rel="stylesheet" type="text/css" href="css/whole.css">
     <link rel="stylesheet" type="text/css" href="css/layout.css">
 	<script type="text/javascript">
@@ -36,7 +38,7 @@
 	<div class="dhlheader">
 	  <div class="dhlmenu"> <a title="JEECMS官方网站" href="http://bbs.jeecms.com/" class="logo" id="logo"></a>
 		<ul class="dhlmenu-list">
-		 <li class="dhlmenu-list-index current"><a href="main">首页</a></li>
+		 <li class="dhlmenu-list-index current"><a href="http://bbs.jeecms.com/">首页</a></li>
 	  <li><a href="http://www.jeecms.com/" target="_blank">官网</a></li>
 	  <li><a href="http://www.jeecms.com/buy/index.htm" target="_blank">购买</a></li>
 	  <li><a href="http://www.jeecms.com/service/index.htm" target="_blank">服务</a></li>
@@ -51,56 +53,52 @@
     <div class="main-wrap">
     <div id="main">
     <div class="t z">
-    <form id="jvForm" action="validate" method="post">
+    <form id="jvForm" action="registerSubmit" method="post">
     <table width="100%" cellspacing="0" cellpadding="0">
       <thead>
         <tr>
           <th class="h" colspan="2">
-          <h2>JEEBBS提示信息</h2>
+          <h2>用户注册</h2>
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr class="tr2">
-          <td align="left">
-		  
-		  
-          <input type="hidden" name="returnUrl" value="${refer }">
-			<ulstyle="margin-left:60px; line-height:="" 30px;"="">
-				<li style="list-style-type: circle; color: red;">
-					${message}   ${param.message }
-				</li>
-          </ulstyle="margin-left:60px;></td>
-        </tr>
 		
         <tr class="tr2">
           <td align="left">
             <table width="200" cellspacing="0" cellpadding="0" border="0" align="center">
               <tbody>
                 <tr>
-                  <th colspan="2">会员登录</th>
-                </tr>
-                <tr>
                   <td width="40%" align="right">用户名：</td>
-                  <td><input type="text" title="用户名不能为空" class="required input" size="15" name="username" id="username"></td>
+                  <td>
+                  	<input type="text" title="用户名不能为空" class="required input" size="15" name="username" id="username">
+                  </td>
                 </tr>
                 <tr>
                   <td align="right">密码：</td>
-                  <td><input type="password" title="密码不能为空" class="required input" size="15" name="password"></td>
+                  <td><input id="password" type="password" title="密码不能为空" class="required input" size="15" name="password"></td>
+                </tr>
+                 <tr>
+                  <td align="right">确认密码：</td>
+                  <td><input type="password" title="两次密码不相同"  equalTo="#password"  class="required input" size="15" name="repassword"></td>
+                  
+                </tr>
+                   <tr>
+                  <td align="right">E-mail：</td>
+                  <td><input type="text" class="required input email" size="15" name="email"></td>
                 </tr>
                 <tr>
                   <td align="right">验证码：</td>
                   <td><input type="text" title="请填写验证码" class="required input" size="15" name="rand" id="captcha"></td>
                 </tr>
                 <tr>
-                  <td align="right"></td>
+                  <td></td>
                   <td><img id="randImage"  src="image" onclick="javascript:loadimage();"></td>
                 </tr>
                 <tr>
-                  <td align="center" colspan="2">
-			     <input type="checkbox" value="true" name="rememberMe">&nbsp;下次自动登录
-                 <input type="submit" style="vertical-align: middle;" value="提交" class="bta"> &nbsp;尚未注册？<a href="register">点这里注册吧.</a>
-				 </td>
+                  <td  align="center" colspan="2">
+                 <input type="submit" style="vertical-align: middle;" value="提交" class="bta"> 
+                 </td>
                 </tr>
               </tbody>
             </table>
