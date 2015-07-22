@@ -10,10 +10,31 @@ Target Server Type    : MYSQL
 Target Server Version : 50614
 File Encoding         : 65001
 
-Date: 2015-07-18 16:43:43
+Date: 2015-07-22 20:26:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `article`
+-- ----------------------------
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE `article` (
+`articleId`  int(11) NOT NULL ,
+`title`  varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`content`  varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`siteId`  int(11) NOT NULL ,
+`userId`  int(11) NOT NULL ,
+PRIMARY KEY (`articleId`),
+FOREIGN KEY (`siteId`) REFERENCES `site` (`siteId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+INDEX `siteId` (`siteId`) USING BTREE ,
+INDEX `userId` (`userId`) USING BTREE 
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+
+;
 
 -- ----------------------------
 -- Records of article
@@ -23,6 +44,21 @@ INSERT INTO `article` VALUES ('1', 'first', 'hello', '1', '1'), ('2', 'second', 
 COMMIT;
 
 -- ----------------------------
+-- Table structure for `kind`
+-- ----------------------------
+DROP TABLE IF EXISTS `kind`;
+CREATE TABLE `kind` (
+`kindId`  int(11) NOT NULL AUTO_INCREMENT ,
+`name`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+PRIMARY KEY (`kindId`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=3
+
+;
+
+-- ----------------------------
 -- Records of kind
 -- ----------------------------
 BEGIN;
@@ -30,11 +66,51 @@ INSERT INTO `kind` VALUES ('1', '管理区'), ('2', '交流区');
 COMMIT;
 
 -- ----------------------------
+-- Table structure for `reply`
+-- ----------------------------
+DROP TABLE IF EXISTS `reply`;
+CREATE TABLE `reply` (
+`replyId`  int(11) NOT NULL AUTO_INCREMENT ,
+`content`  varchar(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`articleId`  int(11) NOT NULL ,
+`userId`  int(11) NOT NULL ,
+PRIMARY KEY (`replyId`),
+FOREIGN KEY (`articleId`) REFERENCES `article` (`articleId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+INDEX `reply_article` (`articleId`) USING BTREE ,
+INDEX `reply_user` (`userId`) USING BTREE 
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=24
+
+;
+
+-- ----------------------------
 -- Records of reply
 -- ----------------------------
 BEGIN;
-INSERT INTO `reply` VALUES ('1', 'hi，nice to meet you', '1', '1'), ('2', 'yes,your are handsome', '1', '1'), ('3', '啊啊啊啊', '1', '1'), ('4', 'asdfasd', '1', '1'), ('5', 'asdfasd', '1', '1'), ('6', 'asdfasd', '1', '1'), ('7', 'ç±çè²æ¾', '2', '1'), ('8', 'sadf', '2', '1'), ('9', '1231312', '2', '1'), ('10', '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', '2', '1'), ('11', '成功了吗', '2', '1'), ('12', ' QW', '2', '1'), ('13', '氟化工', '1', '1'), ('14', 'asdf', '1', '1'), ('15', '啊打发', '1', '1'), ('16', '23423', '1', '1'), ('17', '122', '2', '1'), ('18', '45345', '1', '1'), ('19', '444', '2', '1');
 COMMIT;
+
+-- ----------------------------
+-- Table structure for `site`
+-- ----------------------------
+DROP TABLE IF EXISTS `site`;
+CREATE TABLE `site` (
+`siteId`  int(11) NOT NULL ,
+`name`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`KindId`  int(11) NOT NULL ,
+`owner`  int(11) NULL DEFAULT NULL ,
+PRIMARY KEY (`siteId`),
+FOREIGN KEY (`KindId`) REFERENCES `kind` (`kindId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`owner`) REFERENCES `user` (`userId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+INDEX `KindId` (`KindId`) USING BTREE ,
+INDEX `owner` (`owner`) USING BTREE 
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+
+;
 
 -- ----------------------------
 -- Records of site
@@ -44,8 +120,39 @@ INSERT INTO `site` VALUES ('1', '用户管理', '1', null), ('2', '站长管理'
 COMMIT;
 
 -- ----------------------------
+-- Table structure for `user`
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+`userId`  int(11) NOT NULL AUTO_INCREMENT ,
+`password`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`username`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+PRIMARY KEY (`userId`, `username`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=16
+
+;
+
+-- ----------------------------
 -- Records of user
 -- ----------------------------
 BEGIN;
 INSERT INTO `user` VALUES ('1', '81DC9BDB52D04DC20036DBD8313ED055', 'zhong');
 COMMIT;
+
+-- ----------------------------
+-- Auto increment value for `kind`
+-- ----------------------------
+ALTER TABLE `kind` AUTO_INCREMENT=3;
+
+-- ----------------------------
+-- Auto increment value for `reply`
+-- ----------------------------
+ALTER TABLE `reply` AUTO_INCREMENT=24;
+
+-- ----------------------------
+-- Auto increment value for `user`
+-- ----------------------------
+ALTER TABLE `user` AUTO_INCREMENT=16;

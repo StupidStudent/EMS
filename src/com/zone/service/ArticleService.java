@@ -20,4 +20,11 @@ public interface ArticleService
 	 * @return 帖子列表
 	 */
 	List<Article> findArticles(int siteId);
+
+	/**
+	 * 保存新文章
+	 * @param article
+	 * @return 
+	 */
+	int save(Article article);
 }

@@ -38,7 +38,7 @@
 	<div class="dhlheader">
 	  <div class="dhlmenu"> <a title="JEECMS官方网站" href="http://bbs.jeecms.com/" class="logo" id="logo"></a>
 		<ul class="dhlmenu-list">
-		 <li class="dhlmenu-list-index current"><a href="http://bbs.jeecms.com/">首页</a></li>
+		 <li class="dhlmenu-list-index current"><a href="main">首页</a></li>
 	  <li><a href="http://www.jeecms.com/" target="_blank">官网</a></li>
 	  <li><a href="http://www.jeecms.com/buy/index.htm" target="_blank">购买</a></li>
 	  <li><a href="http://www.jeecms.com/service/index.htm" target="_blank">服务</a></li>

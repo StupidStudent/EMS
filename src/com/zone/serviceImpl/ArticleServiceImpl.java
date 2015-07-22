@@ -1,5 +1,6 @@
 package com.zone.serviceImpl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -30,6 +31,12 @@ public class ArticleServiceImpl implements ArticleService
 	{
 		List<Article> articles = baseDao.getListByHQL("from Article  where site.siteId=?",siteId);
 		return articles;
+	}
+	
+	@Override
+	public int save(Article article)
+	{
+		 return baseDao.save(article);
 	}
 
 }

@@ -17,8 +17,9 @@ public interface IBaseDao<T, ID extends Serializable> {
      * <保存实体>
      * <完整保存实体>
      * @param t 实体参数
+     * @return 
      */
-    public abstract void save(T t);
+    public abstract int save(T t);
  
     /**
      * <保存或者更新实体>

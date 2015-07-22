@@ -59,10 +59,11 @@ public class BaseDao<T, ID extends Serializable> implements IBaseDao<T, ID> {
      * <完整保存实体>
      * @param t 实体参数
      * @see com.itv.launcher.util.IBaseDao#save(java.lang.Object)
+     * @return 保存到数据库后，改实体的id
      */
     @Override
-    public void save(T t) {
-        this.getSession().save(t);
+    public int save(T t) {
+        return (Integer) this.getSession().save(t);
     }
      
     /**
