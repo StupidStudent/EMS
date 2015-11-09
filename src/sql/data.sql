@@ -1,158 +1,91 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : mysql
-Source Server Version : 50614
-Source Host           : localhost:3306
-Source Database       : zone
-
-Target Server Type    : MYSQL
-Target Server Version : 50614
-File Encoding         : 65001
-
-Date: 2015-07-22 20:26:45
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for `article`
--- ----------------------------
-DROP TABLE IF EXISTS `article`;
-CREATE TABLE `article` (
-`articleId`  int(11) NOT NULL ,
-`title`  varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`content`  varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`siteId`  int(11) NOT NULL ,
-`userId`  int(11) NOT NULL ,
-PRIMARY KEY (`articleId`),
-FOREIGN KEY (`siteId`) REFERENCES `site` (`siteId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-INDEX `siteId` (`siteId`) USING BTREE ,
-INDEX `userId` (`userId`) USING BTREE 
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-
-;
-
--- ----------------------------
--- Records of article
--- ----------------------------
-BEGIN;
-INSERT INTO `article` VALUES ('1', 'first', 'hello', '1', '1'), ('2', 'second', '啊啊啊', '1', '1');
-COMMIT;
-
--- ----------------------------
--- Table structure for `kind`
--- ----------------------------
-DROP TABLE IF EXISTS `kind`;
-CREATE TABLE `kind` (
-`kindId`  int(11) NOT NULL AUTO_INCREMENT ,
-`name`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
-PRIMARY KEY (`kindId`)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=3
-
-;
-
--- ----------------------------
--- Records of kind
--- ----------------------------
-BEGIN;
-INSERT INTO `kind` VALUES ('1', '管理区'), ('2', '交流区');
-COMMIT;
-
--- ----------------------------
--- Table structure for `reply`
--- ----------------------------
-DROP TABLE IF EXISTS `reply`;
-CREATE TABLE `reply` (
-`replyId`  int(11) NOT NULL AUTO_INCREMENT ,
-`content`  varchar(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`articleId`  int(11) NOT NULL ,
-`userId`  int(11) NOT NULL ,
-PRIMARY KEY (`replyId`),
-FOREIGN KEY (`articleId`) REFERENCES `article` (`articleId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-INDEX `reply_article` (`articleId`) USING BTREE ,
-INDEX `reply_user` (`userId`) USING BTREE 
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=24
-
-;
-
--- ----------------------------
--- Records of reply
--- ----------------------------
-BEGIN;
-COMMIT;
-
--- ----------------------------
--- Table structure for `site`
--- ----------------------------
-DROP TABLE IF EXISTS `site`;
-CREATE TABLE `site` (
-`siteId`  int(11) NOT NULL ,
-`name`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`KindId`  int(11) NOT NULL ,
-`owner`  int(11) NULL DEFAULT NULL ,
-PRIMARY KEY (`siteId`),
-FOREIGN KEY (`KindId`) REFERENCES `kind` (`kindId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`owner`) REFERENCES `user` (`userId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-INDEX `KindId` (`KindId`) USING BTREE ,
-INDEX `owner` (`owner`) USING BTREE 
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-
-;
-
--- ----------------------------
--- Records of site
--- ----------------------------
-BEGIN;
-INSERT INTO `site` VALUES ('1', '用户管理', '1', null), ('2', '站长管理', '1', null), ('3', '英语交流', '2', null), ('4', '学习交流', '2', null), ('5', '系统公告', '1', null), ('6', '封号通知', '1', null), ('7', '帖子管理', '1', null);
-COMMIT;
-
--- ----------------------------
--- Table structure for `user`
--- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-`userId`  int(11) NOT NULL AUTO_INCREMENT ,
-`password`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`username`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-PRIMARY KEY (`userId`, `username`)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=16
-
-;
-
--- ----------------------------
--- Records of user
--- ----------------------------
-BEGIN;
-INSERT INTO `user` VALUES ('1', '81DC9BDB52D04DC20036DBD8313ED055', 'zhong');
-COMMIT;
-
--- ----------------------------
--- Auto increment value for `kind`
--- ----------------------------
-ALTER TABLE `kind` AUTO_INCREMENT=3;
-
--- ----------------------------
--- Auto increment value for `reply`
--- ----------------------------
-ALTER TABLE `reply` AUTO_INCREMENT=24;
-
--- ----------------------------
--- Auto increment value for `user`
--- ----------------------------
-ALTER TABLE `user` AUTO_INCREMENT=16;
+--将表数据生成SQL脚本的存储过程 
+ 
+CREATE PROCEDURE dbo.UspOutputData 
+@tablename sysname 
+AS 
+declare @column varchar(1000) 
+declare @columndata varchar(1000) 
+declare @sql varchar(4000) 
+declare @xtype tinyint 
+declare @name sysname 
+declare @objectId int 
+declare @objectname sysname 
+declare @ident int 
+ 
+set nocount on 
+set @objectId=object_id(@tablename) 
+ 
+if @objectId is null -- 判断对象是否存在 
+begin 
+print 'The object not exists' 
+return 
+end 
+set @objectname=rtrim(object_name(@objectId)) 
+ 
+if @objectname is null or charindex(@objectname,@tablename)=0 --此判断不严密 
+begin 
+print 'object not in current database' 
+return 
+end 
+ 
+if OBJECTPROPERTY(@objectId,'IsTable') < > 1 -- 判断对象是否是table 
+begin 
+print 'The object is not table' 
+return 
+end 
+ 
+select @ident=status&0x80 from syscolumns where id=@objectid and status&0x80=0x80 
+ 
+if @ident is not null 
+print 'SET IDENTITY_INSERT '+@TableName+' ON' 
+ 
+declare syscolumns_cursor cursor 
+ 
+for select c.name,c.xtype from syscolumns c where c.id=@objectid order by c.colid 
+ 
+open syscolumns_cursor 
+set @column='' 
+set @columndata='' 
+fetch next from syscolumns_cursor into @name,@xtype 
+ 
+while @@fetch_status < >-1 
+begin 
+if @@fetch_status < >-2 
+begin 
+if @xtype not in(189,34,35,99,98) --timestamp不需处理，image,text,ntext,sql_variant 暂时不处理 
+ 
+begin 
+set @column=@column+case when len(@column)=0 then'' else ','end+@name 
+ 
+set @columndata=@columndata+case when len(@columndata)=0 then '' else ','','',' 
+end 
+ 
++case when @xtype in(167,175) then '''''''''+'+@name+'+''''''''' --varchar,char 
+when @xtype in(231,239) then '''N''''''+'+@name+'+''''''''' --nvarchar,nchar 
+when @xtype=61 then '''''''''+convert(char(23),'+@name+',121)+''''''''' --datetime 
+when @xtype=58 then '''''''''+convert(char(16),'+@name+',120)+''''''''' --smalldatetime 
+when @xtype=36 then '''''''''+convert(char(36),'+@name+')+''''''''' --uniqueidentifier 
+else @name end 
+ 
+end 
+ 
+end 
+ 
+fetch next from syscolumns_cursor into @name,@xtype 
+ 
+end 
+ 
+close syscolumns_cursor 
+deallocate syscolumns_cursor 
+ 
+set @sql='set nocount on select ''insert '+@tablename+'('+@column+') values(''as ''--'','+@columndata+','')'' from '+@tablename 
+ 
+print '--'+@sql 
+exec(@sql) 
+ 
+if @ident is not null 
+print 'SET IDENTITY_INSERT '+@TableName+' OFF' 
+ 
+GO 
+ 
+exec UspOutputData 你的表名

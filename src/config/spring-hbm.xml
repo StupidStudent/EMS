@@ -6,11 +6,10 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- 配置数据源 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://localhost/zone"></property>
-		<property name="username" value="root"></property>
-		<property name="password" value="1994"></property>
-
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
+		<property name="url" value="jdbc:sqlserver://localhost:1433; DatabaseName=EMS"></property>
+		<property name="username" value="sa"></property>
+		<property name="password" value=""></property>
 <!-- 
  		<property name="url" value="jdbc:mysql://w.rdc.sae.sina.com.cn:3307/app_zzone"></property>
 		<property name="username" value="32j2kyw502"></property>
@@ -32,7 +31,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 		</property>
 
 		<!-- 交由注解扫描实体类，省去了以前hibernate的配置文件，自动生成数据表 -->
-		<property name="packagesToScan" value="com.zone.entity" />
+		<property name="packagesToScan" value="entity" />
 
 
 		<!-- 注解扫描的包 另一种扫描实体类的方式，要一个一个写，不方便 -->
