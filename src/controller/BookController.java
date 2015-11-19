@@ -73,7 +73,7 @@ public class BookController
 		Book book = new Book();
 		book.setAuthor(request.getParameter("author"));
 		book.setName(request.getParameter("name"));
-		book.setPrice(Double.valueOf(request.getParameter("price")));
+		book.setPrice(Float.valueOf(request.getParameter("price")));
 		book.setPublish(request.getParameter("publish"));
 		book.setVersion(Integer.valueOf(request.getParameter("version")));
 		course.setBook(book);		//规定哪门课程需要该书

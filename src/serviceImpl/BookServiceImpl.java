@@ -1,5 +1,7 @@
 package serviceImpl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -24,4 +26,9 @@ public class BookServiceImpl implements BookService
 		return true;
 	}
 
+	@Override
+	public List<Book> getAll()
+	{
+		return baseDao.getAll(Book.class);
+	}
 }

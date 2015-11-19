@@ -17,7 +17,7 @@ public interface ProfessionService
 	
 	public void deleteProfession(int proId);
 	
-	public void saveOrUpdateProfession(String introduction,String teachPlan,int proId);
+	public void saveOrUpdateProfession(Profession t);
 	public void delete(int proId);
 	public void saveTeachPlan(int proId, String teachPlan);
 }

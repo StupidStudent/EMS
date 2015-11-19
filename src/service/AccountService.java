@@ -1,8 +1,8 @@
 package service;
 
-import entity.Account;
+import entity.User;
 
 public interface AccountService
 {
-	public Account getUser(Integer accountId);
+	public User getUser(Integer accountId);
 }

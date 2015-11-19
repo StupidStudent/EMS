@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import dao.IBaseDao;
@@ -16,6 +17,7 @@ import service.ClassTeamService;
 import util.StringUtil;
 
 @Service
+@Transactional
 public class ClassTeamServiceImpl implements ClassTeamService
 {
 

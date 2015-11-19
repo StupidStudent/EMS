@@ -51,9 +51,8 @@ public class ProfessionServiceImpl implements ProfessionService
 	}
 	
 	@Override
-	public void saveOrUpdateProfession(String introduction,String teachPlan,int proId) {
-		 baseDao.queryHql("update Profession set introduction=?,teachPlan=? where proId=?",introduction,teachPlan,proId);
-		 
+	public void saveOrUpdateProfession(Profession t) {
+		 baseDao.saveOrUpdate(t);
 	}
 	public void saveTeachPlan(int proId,String teachPlan)
 	{

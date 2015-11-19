@@ -9,6 +9,5 @@ public class Login
 	 */
 	public static void checkLoginOrNot(HttpServletRequest request)
 	{
-		
 	}
 }

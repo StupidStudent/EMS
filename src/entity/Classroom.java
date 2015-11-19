@@ -2,45 +2,56 @@ package entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 
 /**
  * Classroom entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "classroom", schema = "dbo", catalog = "EMS")
-public class Classroom implements java.io.Serializable
-{
+@Table(name="classroom"
+    ,catalog="ems"
+)
 
-	// Fields
+public class Classroom  implements java.io.Serializable {
 
-	private String classroomId;
 
-	// Constructors
+    // Fields    
 
-	/** default constructor */
-	public Classroom()
-	{
-	}
+     private String classroomId;
 
-	/** full constructor */
-	public Classroom(String classroomId)
-	{
-		this.classroomId = classroomId;
-	}
 
-	// Property accessors
-	@Id
-	@Column(name = "classroomId", unique = true, nullable = false, length = 10)
-	public String getClassroomId()
-	{
-		return this.classroomId;
-	}
+    // Constructors
 
-	public void setClassroomId(String classroomId)
-	{
-		this.classroomId = classroomId;
-	}
+    /** default constructor */
+    public Classroom() {
+    }
+
+    
+
+   
+    // Property accessors
+    @Id @GeneratedValue(strategy=IDENTITY)
+    
+    @Column(name="classroomId", unique=true, nullable=false, length=10)
+
+    public String getClassroomId() {
+        return this.classroomId;
+    }
+    
+    public void setClassroomId(String classroomId) {
+        this.classroomId = classroomId;
+    }
+   
+
+
+
+
+
+
+
 
 }

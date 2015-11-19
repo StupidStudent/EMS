@@ -14,4 +14,5 @@ public interface TeacherService
 	
 	public void saveOrUpdateTeacher(String name,int age,String rank,int teaId);
 
+	public List<Teacher> getAll();
 }

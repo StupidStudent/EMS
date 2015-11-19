@@ -7,9 +7,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import entity.User;
+
 import service.AccountService;
 import util.MD5;
-import entity.Account;
 
 @Controller
 public class AccountController
@@ -36,23 +37,23 @@ public class AccountController
 	@RequestMapping("loginCheck")
 	public String loginCheck(HttpServletRequest request)
 	{
-		Account account = accountService.getUser(Integer.valueOf(request
+		User user = accountService.getUser(Integer.valueOf(request
 				.getParameter("username")));
 		String password = request.getParameter("password");
 		String message = "";
-		if (null == account)
+		if (null == user)
 		{
 			message = "该用户不存在！";
-		} else if (!account.getPassword().equals(MD5.MD5(password)))
+		} else if (!user.getPassword().equals(password))
 		{
 			message = "密码错误！";
 		}
 		else
 		{
 			HttpSession session = request.getSession();
-			session.setAttribute("username", account.getUserId());
+			session.setAttribute("username", user.getUserId());
 			session.setAttribute("password", password);
-			session.setAttribute("kind", account.getKind());
+			session.setAttribute("kind", user.getKind());
 			return "index";
 		}
 		request.setAttribute("message", message);

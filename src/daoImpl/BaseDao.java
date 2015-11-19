@@ -23,11 +23,13 @@ import org.hibernate.Transaction;
 import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import util.StringUtil;
 import dao.IBaseDao;
 import dao.PageResults;
 import dao.RowMapper;
+import entity.Syllabus;
  
 /**
  * @ClassName: BaseDao
@@ -126,8 +128,9 @@ public class BaseDao<T, ID extends Serializable> implements IBaseDao<T, ID> {
      * @see com.itv.launcher.util.IBaseDao#delete(java.lang.Object)
      */
     @Override
+    @Transactional
     public void delete(T t) {
-    	 this.getSession().delete(t);
+    	this.getSession().delete(t);
     }
      
     /**
@@ -437,7 +440,6 @@ public class BaseDao<T, ID extends Serializable> implements IBaseDao<T, ID> {
      * @return session
      */
     public Session getSession() {
-        //需要开启事务，才能得到CurrentSession
         return sessionFactory.getCurrentSession();
     }
     

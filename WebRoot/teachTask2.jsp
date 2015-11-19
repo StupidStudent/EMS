@@ -10,7 +10,7 @@
 <div id="content">
 <!--breadcrumbs-->
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i>首页</a> <a href="teachPlan1">教学计划</a></div>
+    <div id="breadcrumb"> <a href="index" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i>首页</a> <a href="teachPlan1">教学任务</a></div>
   </div>
   <!--End-breadcrumbs-->
 
@@ -20,9 +20,7 @@
       <div class="widget-title"> <span class="icon"> <i class="icon-list"></i></span>
         <h5>${profession.name }
         </h5>
-         	<c:if test="${sessionScope.kind != '学生' }">
         	  <button class="btn btn-success btn-mini button" id="add">添加</button>
-         	</c:if>
       </div>
        <div class="widget-content nopadding">
             <table class="table table-bordered table-striped">
@@ -37,7 +35,7 @@
                 </tr>
               </thead>
               <tbody>
-                <c:forEach items="${profession.syllabuses }" var="syllabus">
+                <c:forEach items="${syllabuses }" var="syllabus">
 	                <tr class="even gradeC" syllabusId="${syllabus.syllabusId}">
 	                  <td>第<font class="year">${syllabus.year}</font>学年</td>
 	                  <td>第<font class="term">${syllabus.term}</font>学期</td>
@@ -64,47 +62,42 @@
     <div class="widget-content nopadding">
       <form action="saveOrUpdateSyllabus" method="post" class="form-horizontal">
         <div class="control-group">
-          <label class="control-label">选择学年</label>
-          <div class="controls">
-            <select  id="profession" name="year" required>
-            	<option value="1">第一学年</option>
-            	<option value="2">第二学年</option>
-            	<option value="3">第三学年</option>
-            	<option value="4">第四学年</option>
-            </select>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">选择学期</label>
-          <div class="controls">
-            <select name="term" required>
-            	<option value="1">第一学期</option>
-            	<option value="2">第二学期</option>
-            </select>
-          </div>
-        </div>
-        <div class="control-group">
           <label class="control-label">选择课程</label>
           <div class="controls">
-          	<select name="course.courseId" id="course" >
-          		<c:forEach items="${courses }" var="course">
-          			<option value="${course.courseId }">${course.name }</option>
+          	<select name="teachPlanId" id="course" >
+          		<c:forEach items="${teachPlans }" var="teachPlan">
+          			<option value="${teachPlan.syllabusId }">${teachPlan.course.name}</option>
           		</c:forEach>
             </select>
           </div>
         </div>
         
         <div class="control-group">
-          <label class="control-label">课时</label>
+          <label class="control-label">选择教材</label>
           <div class="controls">
-          	<input type="number" name="hour" required>
+          	<select name="book.bookId" id="book" >
+          		<c:forEach items="${books }" var="book">
+          			<option value="${book.bookId }">${book.name}</option>
+          		</c:forEach>
+            </select>
           </div>
         </div>
-        
+    
+        <div class="control-group">
+          <label class="control-label">任课教师</label>
+          <div class="controls">
+          	<select name="teacher.teaId" id="teacher" >
+          		<c:forEach items="${teachers }" var="teacher">
+          			<option value="${teacher.teaId }">${teacher.name}</option>
+          		</c:forEach>
+            </select>
+          </div>
+        </div>
+       
         <div class="form-actions">
           <input type="submit" class="btn btn-success" value="确定">
           <input type="button" class="btn" value="取消" id="cancel">
-          <input type="hidden" value="${profession.proId}" name="profession.proId">
+          <input type="hidden" value="${classId}" name="classteam.classId">
           <input type="hidden" name="syllabusId">
         </div>
       </form>

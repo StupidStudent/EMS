@@ -6,121 +6,133 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 /**
  * Course entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "course", schema = "dbo", catalog = "EMS")
-public class Course implements java.io.Serializable
-{
+@Table(name="course"
+    ,catalog="ems"
+)
 
-	// Fields
+public class Course  implements java.io.Serializable {
 
-	private Integer courseId;
-	private Book book;
-	private String name;
-	private String instruction;
-	private String teachPlan;
-	private Set<Syllabus> syllabuses = new HashSet<Syllabus>(0);
 
-	// Constructors
+    // Fields    
 
-	/** default constructor */
-	public Course()
-	{
-	}
+     private Integer courseId;
+     private Book book;
+     private String name;
+     private String instruction;
+     private String teachPlan;
+     private Integer credit;
+     private Set<Syllabus> syllabuses = new HashSet<Syllabus>(0);
 
-	/** minimal constructor */
-	public Course(Integer courseId)
-	{
-		this.courseId = courseId;
-	}
 
-	/** full constructor */
-	public Course(Integer courseId, Book book, String name, String instruction,
-			String teachPlan, Set<Syllabus> syllabuses)
-	{
-		this.courseId = courseId;
-		this.book = book;
-		this.name = name;
-		this.instruction = instruction;
-		this.teachPlan = teachPlan;
-		this.syllabuses = syllabuses;
-	}
+    // Constructors
 
-	// Property accessors
-	@Id
-	@Column(name = "courseId", unique = true, nullable = false)
-	public Integer getCourseId()
-	{
-		return this.courseId;
-	}
+    /** default constructor */
+    public Course() {
+    }
 
-	public void setCourseId(Integer courseId)
-	{
-		this.courseId = courseId;
-	}
+    
+    /** full constructor */
+    public Course(Book book, String name, String instruction, String teachPlan, Integer credit, Set<Syllabus> syllabuses) {
+        this.book = book;
+        this.name = name;
+        this.instruction = instruction;
+        this.teachPlan = teachPlan;
+        this.credit = credit;
+        this.syllabuses = syllabuses;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "bookId")
-	public Book getBook()
-	{
-		return this.book;
-	}
+   
+    // Property accessors
+    @Id @GeneratedValue(strategy=IDENTITY)
+    
+    @Column(name="courseId", unique=true, nullable=false)
 
-	public void setBook(Book book)
-	{
-		this.book = book;
-	}
+    public Integer getCourseId() {
+        return this.courseId;
+    }
+    
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+	@ManyToOne(fetch=FetchType.LAZY)
+        @JoinColumn(name="bookId")
 
-	@Column(name = "name", length = 50)
-	public String getName()
-	{
-		return this.name;
-	}
+    public Book getBook() {
+        return this.book;
+    }
+    
+    public void setBook(Book book) {
+        this.book = book;
+    }
+    
+    @Column(name="name", length=50)
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+    public String getName() {
+        return this.name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    @Column(name="instruction", length=200)
 
-	@Column(name = "instruction", length = 200)
-	public String getInstruction()
-	{
-		return this.instruction;
-	}
+    public String getInstruction() {
+        return this.instruction;
+    }
+    
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
+    }
+    
+    @Column(name="teachPlan", length=1000)
 
-	public void setInstruction(String instruction)
-	{
-		this.instruction = instruction;
-	}
+    public String getTeachPlan() {
+        return this.teachPlan;
+    }
+    
+    public void setTeachPlan(String teachPlan) {
+        this.teachPlan = teachPlan;
+    }
+    
+    @Column(name="credit")
 
-	@Column(name = "teachPlan", length = 1000)
-	public String getTeachPlan()
-	{
-		return this.teachPlan;
-	}
+    public Integer getCredit() {
+        return this.credit;
+    }
+    
+    public void setCredit(Integer credit) {
+        this.credit = credit;
+    }
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="course")
 
-	public void setTeachPlan(String teachPlan)
-	{
-		this.teachPlan = teachPlan;
-	}
+    public Set<Syllabus> getSyllabuses() {
+        return this.syllabuses;
+    }
+    
+    public void setSyllabuses(Set<Syllabus> syllabuses) {
+        this.syllabuses = syllabuses;
+    }
+   
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "course")
-	public Set<Syllabus> getSyllabuses()
-	{
-		return this.syllabuses;
-	}
 
-	public void setSyllabuses(Set<Syllabus> syllabuses)
-	{
-		this.syllabuses = syllabuses;
-	}
+
+
+
+
+
 
 }

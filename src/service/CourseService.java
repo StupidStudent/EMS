@@ -10,6 +10,8 @@ public interface CourseService
 	public  List<Course> getCousesByClassId(int classId);
 	
 	public List<Course>  getCourse(int courseId);
+
+	public List<Course> getCourses();
 	
 	public Course get(int courseId);
 

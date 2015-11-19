@@ -1,4 +1,5 @@
 /*班级下拉列表*/
+/*
 $("#class").change(function(){
 	$.ajax(
 		{
@@ -12,7 +13,7 @@ $("#class").change(function(){
 		}
 	);
 });
-
+*/
 /*专业下拉列表*/
 $("#profession").change(function(){
 	$.ajax(
@@ -22,7 +23,7 @@ $("#profession").change(function(){
  			data:"proId="+$("#profession").find("option:selected").attr("id"),
 			dataType:'html',
 			success:function(result){
-				$("#class").append(result);
+				$("#class").html(result);
 			}
 		}
 	);

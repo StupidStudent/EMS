@@ -12,14 +12,14 @@
 	PreparedStatement pst = null;
 
 try{
-	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+	Class.forName("com.mysql.jdbc.Driver");
 }
 catch(ClassNotFoundException ce){
 	out.println(ce.getMessage());
 }
 
 try{
-	conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433; DatabaseName=EMS","sa","123456");
+	conn = DriverManager.getConnection("jdbc:mysql://localhost/ems","root","1994");
 	pst = conn.prepareStatement("insert into profession(proId,name,introduction,teachPlan)values("+proId+",'"+name+"','"+introduction+"','"+teachPlan+"')");
 	pst.executeUpdate();
 	response.sendRedirect("professionInfo.jsp");

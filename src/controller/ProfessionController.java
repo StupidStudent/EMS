@@ -12,8 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import service.CourseService;
 import service.ProfessionService;
+import service.SyllabusService;
+import entity.Course;
 import entity.Profession;
+import entity.Syllabus;
 import entity.Teacher;
 
 @Controller
@@ -21,6 +25,12 @@ public class ProfessionController
 {
 	@Resource 
 	private ProfessionService professionService;
+	
+	@Resource
+	private CourseService courseService;
+	
+	@Resource
+	private SyllabusService syllabusService;
 	
 	@RequestMapping("professionInfo")
 	public ModelAndView professionInfo(HttpServletRequest request)
@@ -70,23 +80,36 @@ public class ProfessionController
 		return mv;
 	}
 	
-	@RequestMapping("getTeachPlan")
-	public ModelAndView getTeachPlan(HttpServletRequest request)
-	{
-		Profession p = professionService.getProfession(Integer.valueOf(request.getParameter("proId")));
-		ModelAndView mv = new ModelAndView("teachPlan2");
-		mv.addObject("profession",p);
+	@RequestMapping("teachTask")
+	public ModelAndView teachTask(HttpServletRequest request){
+		ModelAndView mv = this.professionInfo(request);
+		mv.setViewName("teachTask1");
 		return mv;
 	}
 	
-	@RequestMapping("updateProfessionInfo")
+	@RequestMapping("getTeachPlan")
+	public ModelAndView getTeachPlan(HttpServletRequest request)
+	{
+		int proId = Integer.valueOf(request.getParameter("proId"));
+		Profession p = professionService.getProfession(proId);
+		List<Course> courses = courseService.getCourses();
+		ModelAndView mv = new ModelAndView("teachPlan2");
+		mv.addObject("profession",p);
+		mv.addObject("courses",courses);
+		return mv;
+	}
+	
+	@RequestMapping("saveOrUpdateProfession")
 	public String saveOrUpdateProfession(HttpServletRequest request,HttpServletResponse response) throws IOException
 	{
-		professionService.saveOrUpdateProfession(String.valueOf(request.getParameter("introduction")),String.valueOf(request.getParameter("teachPlan")),Integer.valueOf(request.getParameter("proId")));
-		return "professionInfo"; //返回professionInfo.jsp
+		Profession p = new Profession();
+		p.setName(request.getParameter("name"));
+		p.setIntroduction(request.getParameter("introduction"));
+		professionService.saveOrUpdateProfession(p);
+		return "redirect:/professionInfo"; //返回professionInfo.jsp
 	}
 	@RequestMapping("saveTeachPlan")
-	public void saveTeachPllan(HttpServletRequest request,HttpServletResponse response) throws IOException
+	public void saveTeachPlan(HttpServletRequest request,HttpServletResponse response) throws IOException
 	{
 		professionService.saveTeachPlan(Integer.valueOf(request.getParameter("proId")), request.getParameter("teachPlan"));
 		PrintWriter out = response.getWriter();
