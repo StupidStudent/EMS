@@ -14,8 +14,9 @@ import service.ExamService;
 import entity.Exam;
 
 @Controller
-public class ExamController {
-	
+public class ExamController
+{
+
 	@Resource
 	private ExamService examService;
 
@@ -24,16 +25,16 @@ public class ExamController {
 	{
 		return "examArrange";
 	}
-	
+
 	@RequestMapping("saveExam")
 	public String saveExam(HttpServletRequest request)
 	{
 		Exam exam = new Exam();
-		exam.setClassroom(request.getParameter("classroom")); //把数据set到这个bean里面去
+		exam.setClassroom(request.getParameter("classroom")); // 把数据set到这个bean里面去
 		exam.setCourse(request.getParameter("course"));
 		exam.setTeacher(request.getParameter("teacher"));
 		exam.setTeacher(request.getParameter("time"));
 		examService.save(exam);
-		return "examArrange"; //返回该页面
+		return "examArrange"; // 返回该页面
 	}
 }
